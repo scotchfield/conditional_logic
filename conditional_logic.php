@@ -28,6 +28,20 @@ class WP_ConditionalLogic {
 		}
 
 		self::$instance = $this;
+
+		add_shortcode( 'condition_id', array( $this, 'shortcode_condition_id' ) );
+	}
+
+	public function shortcode_condition_id( $atts, $content ) {
+		if ( isset( $atts[ 0 ] ) ) {
+			$id = intval( $atts[ 0 ] );
+
+			if ( get_current_user_id() == $id ) {
+				return do_shortcode( $content );
+			}
+		}
+
+		return '';
 	}
 
 }
