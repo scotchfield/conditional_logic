@@ -32,6 +32,10 @@ class WP_ConditionalLogic {
 		add_shortcode( 'is', array( $this, 'shortcode_is' ) );
 	}
 
+	public static function get_instance() {
+		return self::$instance;
+	}
+
 	public function shortcode_is( $atts, $content ) {
 		$result = true;
 
