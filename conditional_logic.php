@@ -29,12 +29,12 @@ class WP_ConditionalLogic {
 
 		self::$instance = $this;
 
-		add_shortcode( 'condition_id', array( $this, 'shortcode_condition_id' ) );
+		add_shortcode( 'is', array( $this, 'shortcode_is' ) );
 	}
 
-	public function shortcode_condition_id( $atts, $content ) {
-		if ( isset( $atts[ 0 ] ) ) {
-			$id = intval( $atts[ 0 ] );
+	public function shortcode_is( $atts, $content ) {
+		if ( isset( $atts[ 'user_id' ] ) ) {
+			$id = intval( $atts[ 'user_id' ] );
 
 			if ( get_current_user_id() == $id ) {
 				return do_shortcode( $content );
