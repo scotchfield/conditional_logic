@@ -47,6 +47,19 @@ class WP_ConditionalLogic {
 			}
 		}
 
+		if ( isset( $atts[ 'user_meta_key' ] ) ) {
+			$meta = get_user_meta( get_current_user_id(), atts[ 'user_meta_key' ], true );
+
+			if ( false == $meta ) {
+				$result = false;
+			} else {
+				if ( isset( $atts[ 'user_meta_value' ] ) &&
+						$meta != $atts[ 'user_meta_value' ] ) {
+					$result = false;
+				}
+			}
+		}
+
 		if ( ! $result ) {
 			$content = '';
 		}
