@@ -33,15 +33,25 @@ class WP_ConditionalLogic {
 	}
 
 	public function shortcode_is( $atts, $content ) {
-		if ( isset( $atts[ 'user_id' ] ) ) {
-			$id = intval( $atts[ 'user_id' ] );
+		$result = true;
 
-			if ( get_current_user_id() == $id ) {
-				return do_shortcode( $content );
+		if ( isset( $atts[ 'user_id' ] ) ) {
+			if ( get_current_user_id() != intval( $atts[ 'user_id' ] ) ) {
+				$result = false;
 			}
 		}
 
-		return '';
+		if ( isset( $atts[ 'user_can' ] ) ) {
+			if ( ! current_user_can( $atts[ 'user_can' ] ) ) {
+				$result = false;
+			}
+		}
+
+		if ( ! $result ) {
+			$content = '';
+		}
+
+		return do_shortcode( $content );
 	}
 
 }
