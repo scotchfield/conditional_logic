@@ -52,7 +52,7 @@ class WP_ConditionalLogic {
 		}
 
 		if ( isset( $atts[ 'user_meta_key' ] ) ) {
-			$meta = get_user_meta( get_current_user_id(), atts[ 'user_meta_key' ], true );
+			$meta = get_user_meta( get_current_user_id(), $atts[ 'user_meta_key' ], true );
 
 			if ( false == $meta ) {
 				$result = false;
@@ -61,6 +61,12 @@ class WP_ConditionalLogic {
 						$meta != $atts[ 'user_meta_value' ] ) {
 					$result = false;
 				}
+			}
+		}
+
+		if ( isset( $atts[ 'user_logged_in' ] ) ) {
+			if ( ! boolval( $atts[ 'user_logged_in' ] ) != is_user_logged_in() ) {
+				$result = false;
 			}
 		}
 
