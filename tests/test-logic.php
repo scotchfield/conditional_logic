@@ -3,12 +3,31 @@
 class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
+	 * @covers WP_ConditionalLogic::__construct
+	 */
+	public function test_new() {
+		$plugin = new WP_ConditionalLogic();
+
+		$this->assertNotNull( $plugin );
+	}
+
+	/**
 	 * @covers WP_ConditionalLogic::get_instance
 	 */
 	public function test_class_exists() {
 		$plugin = WP_ConditionalLogic::get_instance();
 
 		$this->assertNotNull( $plugin );
+	}
+
+	/**
+	 * @covers WP_ConditionalLogic::init
+	 */
+	public function test_init() {
+		$plugin = WP_ConditionalLogic::get_instance();
+		$plugin->init();
+
+		$this->assertTrue( shortcode_exists( 'is' ) );
 	}
 
 	/**

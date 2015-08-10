@@ -29,11 +29,15 @@ class WP_ConditionalLogic {
 
 		self::$instance = $this;
 
-		add_shortcode( 'is', array( $this, 'shortcode_is' ) );
+		add_action( 'init', array( $this, 'init' ) );
 	}
 
 	public static function get_instance() {
 		return self::$instance;
+	}
+
+	public function init() {
+		add_shortcode( 'is', array( $this, 'shortcode_is' ) );
 	}
 
 	public function shortcode_is( $atts, $content ) {
