@@ -10,34 +10,19 @@
 class WP_ConditionalLogic {
 
 	/**
-	 * Store reference to singleton object.
-	 */
-	private static $instance = null;
-
-	/**
-	 * The domain for localization.
-	 */
-	const DOMAIN = 'wp-conditional-logic';
-
-	/**
-	 * Instantiate, if necessary, and add hooks.
+	 * Instantiate and add hooks.
 	 */
 	public function __construct() {
-		if ( isset( self::$instance ) ) {
-			return;
-		}
-
-		self::$instance = $this;
-
 		add_action( 'init', array( $this, 'init' ) );
-	}
-
-	public static function get_instance() {
-		return self::$instance;
 	}
 
 	public function init() {
 		add_shortcode( 'is', array( $this, 'shortcode_is' ) );
+	}
+
+	public function destroy() {
+		remove_shortcode( 'is' );
+		remove_action( 'init', array( $this, 'init' ) );
 	}
 
 	public function shortcode_is( $atts, $content ) {

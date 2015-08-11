@@ -2,30 +2,31 @@
 
 class TestConditionalLogic extends WP_UnitTestCase {
 
+	public function setUp() {
+		parent::setUp();
+
+		$this->plugin = new WP_ConditionalLogic();
+	}
+
+	public function tearDown() {
+		$this->plugin->destroy();
+		unset( $this->plugin );
+
+		parent::tearDown();
+	}
+
 	/**
 	 * @covers WP_ConditionalLogic::__construct
 	 */
 	public function test_new() {
-		$plugin = new WP_ConditionalLogic();
-
-		$this->assertNotNull( $plugin );
-	}
-
-	/**
-	 * @covers WP_ConditionalLogic::get_instance
-	 */
-	public function test_class_exists() {
-		$plugin = WP_ConditionalLogic::get_instance();
-
-		$this->assertNotNull( $plugin );
+		$this->assertNotNull( $this->plugin );
 	}
 
 	/**
 	 * @covers WP_ConditionalLogic::init
 	 */
 	public function test_init() {
-		$plugin = WP_ConditionalLogic::get_instance();
-		$plugin->init();
+		$this->plugin->init();
 
 		$this->assertTrue( shortcode_exists( 'is' ) );
 	}
@@ -34,24 +35,20 @@ class TestConditionalLogic extends WP_UnitTestCase {
 	 * @covers WP_ConditionalLogic::shortcode_is
 	 */
 	public function test_is_user_id_correct_user() {
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$atts = array( 'user_id' => get_current_user_id() );
 		$content = 'correct';
 
-		$this->assertEquals( $content, $plugin->shortcode_is( $atts, $content ) );
+		$this->assertEquals( $content, $this->plugin->shortcode_is( $atts, $content ) );
 	}
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
 	 */
 	public function test_is_user_id_incorrect_user() {
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$atts = array( 'user_id' => get_current_user_id() + 1 );
 		$content = 'correct';
 
-		$this->assertEquals( '', $plugin->shortcode_is( $atts, $content ) );
+		$this->assertEquals( '', $this->plugin->shortcode_is( $atts, $content ) );
 	}
 
 	/**
@@ -62,12 +59,10 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$content = 'correct';
 
-		$this->assertEquals( $content, $plugin->shortcode_is( array( 'user_can' => 'read' ), $content ) );
-		$this->assertEquals( '', $plugin->shortcode_is( array( 'user_can' => 'edit_posts' ), $content ) );
+		$this->assertEquals( $content, $this->plugin->shortcode_is( array( 'user_can' => 'read' ), $content ) );
+		$this->assertEquals( '', $this->plugin->shortcode_is( array( 'user_can' => 'edit_posts' ), $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
@@ -80,12 +75,10 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$content = 'correct';
 
-		$this->assertEquals( $content, $plugin->shortcode_is( array( 'user_can' => 'edit_posts' ), $content ) );
-		$this->assertEquals( '', $plugin->shortcode_is( array( 'user_can' => 'publish_posts' ), $content ) );
+		$this->assertEquals( $content, $this->plugin->shortcode_is( array( 'user_can' => 'edit_posts' ), $content ) );
+		$this->assertEquals( '', $this->plugin->shortcode_is( array( 'user_can' => 'publish_posts' ), $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
@@ -98,12 +91,10 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$content = 'correct';
 
-		$this->assertEquals( $content, $plugin->shortcode_is( array( 'user_can' => 'publish_posts' ), $content ) );
-		$this->assertEquals( '', $plugin->shortcode_is( array( 'user_can' => 'publish_pages' ), $content ) );
+		$this->assertEquals( $content, $this->plugin->shortcode_is( array( 'user_can' => 'publish_posts' ), $content ) );
+		$this->assertEquals( '', $this->plugin->shortcode_is( array( 'user_can' => 'publish_pages' ), $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
@@ -116,12 +107,10 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$content = 'correct';
 
-		$this->assertEquals( $content, $plugin->shortcode_is( array( 'user_can' => 'publish_pages' ), $content ) );
-		$this->assertEquals( '', $plugin->shortcode_is( array( 'user_can' => 'manage_options' ), $content ) );
+		$this->assertEquals( $content, $this->plugin->shortcode_is( array( 'user_can' => 'publish_pages' ), $content ) );
+		$this->assertEquals( '', $this->plugin->shortcode_is( array( 'user_can' => 'manage_options' ), $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
@@ -134,12 +123,10 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$content = 'correct';
 
-		$this->assertEquals( $content, $plugin->shortcode_is( array( 'user_can' => 'manage_options' ), $content ) );
-		$this->assertEquals( '', $plugin->shortcode_is( array( 'user_can' => 'abcdefghijklmnopqrstuvwxyz' ), $content ) );
+		$this->assertEquals( $content, $this->plugin->shortcode_is( array( 'user_can' => 'manage_options' ), $content ) );
+		$this->assertEquals( '', $this->plugin->shortcode_is( array( 'user_can' => 'abcdefghijklmnopqrstuvwxyz' ), $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
@@ -152,13 +139,11 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$meta_key = 'unknown_meta_key_test';
 		$atts = array( 'user_meta_key' => $meta_key );
 		$content = 'correct';
 
-		$this->assertEquals( '', $plugin->shortcode_is( $atts, $content ) );
+		$this->assertEquals( '', $this->plugin->shortcode_is( $atts, $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
@@ -171,8 +156,6 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$meta_key = 'unknown_meta_key_test';
 		$meta_value = 'unknown_meta_key_test';
 		$atts = array( 'user_meta_key' => $meta_key );
@@ -180,7 +163,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 		update_user_meta( $user->ID, $meta_key, $meta_value );
 
-		$this->assertEquals( $content, $plugin->shortcode_is( $atts, $content ) );
+		$this->assertEquals( $content, $this->plugin->shortcode_is( $atts, $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
@@ -193,8 +176,6 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$meta_key = 'unknown_meta_key_test';
 		$meta_value = 'unknown_meta_key_test';
 		$atts = array(
@@ -205,7 +186,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 		update_user_meta( $user->ID, $meta_key, $meta_value );
 
-		$this->assertEquals( '', $plugin->shortcode_is( $atts, $content ) );
+		$this->assertEquals( '', $this->plugin->shortcode_is( $atts, $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
@@ -218,8 +199,6 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		$old_user_id = get_current_user_id();
 		wp_set_current_user( $user->ID );
 
-		$plugin = WP_ConditionalLogic::get_instance();
-
 		$meta_key = 'unknown_meta_key_test';
 		$meta_value = 'unknown_meta_key_test';
 		$atts = array(
@@ -230,7 +209,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 		update_user_meta( $user->ID, $meta_key, $meta_value );
 
-		$this->assertEquals( $content, $plugin->shortcode_is( $atts, $content ) );
+		$this->assertEquals( $content, $this->plugin->shortcode_is( $atts, $content ) );
 
 		wp_set_current_user( $old_user_id );
 	}
