@@ -32,6 +32,17 @@ class TestConditionalLogic extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers WP_ConditionalLogic::init
+	 * @covers WP_ConditionalLogic::destroy
+	 */
+	public function test_destroy() {
+		$this->plugin->init();
+		$this->plugin->destroy();
+
+		$this->assertFalse( shortcode_exists( 'is' ) );
+	}
+
+	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
 	 */
 	public function test_is_user_id_correct_user() {
