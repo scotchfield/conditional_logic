@@ -225,4 +225,34 @@ class TestConditionalLogic extends WP_UnitTestCase {
 		wp_set_current_user( $old_user_id );
 	}
 
+	/**
+	 * @covers WP_ConditionalLogic::shortcode_is
+	 */
+	public function test_is_user_logged_in_false() {
+		$atts = array(
+			'user_logged_in' => 'true',
+		);
+		$content = 'correct';
+
+		$this->assertEquals( '', $this->plugin->shortcode_is( $atts, $content ) );
+	}
+
+	/**
+	 * @covers WP_ConditionalLogic::shortcode_is
+	 */
+	public function test_is_user_logged_in_true() {
+		$user = new WP_User( $this->factory->user->create() );
+		$old_user_id = get_current_user_id();
+		wp_set_current_user( $user->ID );
+
+		$atts = array(
+			'user_logged_in' => 'true',
+		);
+		$content = 'correct';
+
+		$this->assertEquals( $content, $this->plugin->shortcode_is( $atts, $content ) );
+
+		wp_set_current_user( $old_user_id );
+	}
+
 }

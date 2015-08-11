@@ -54,7 +54,7 @@ class WP_ConditionalLogic {
 		}
 
 		if ( isset( $atts[ 'user_logged_in' ] ) ) {
-			if ( ! boolval( $atts[ 'user_logged_in' ] ) != is_user_logged_in() ) {
+			if ( boolval( $atts[ 'user_logged_in' ] ) != is_user_logged_in() ) {
 				$result = false;
 			}
 		}
