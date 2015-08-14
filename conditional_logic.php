@@ -29,6 +29,7 @@ class WP_ConditionalLogic {
 		$result = true;
 
 		$this->is_user( $atts, $result );
+		$this->is_page( $atts, $result );
 
 		if ( ! $result ) {
 			$content = '';
@@ -70,6 +71,61 @@ class WP_ConditionalLogic {
 		}
 	}
 
+	public function is_page( $atts, &$result ) {
+		if ( isset( $atts[ '404_page' ] ) ) {
+			if ( ! is_404() ) {
+				$result = false;
+			}
+		}
+
+		if ( isset( $atts[ 'admin_page' ] ) ) {
+			if ( ! is_admin() ) {
+				$result = false;
+			}
+		}
+
+		if ( isset( $atts[ 'archive_page' ] ) ) {
+			if ( ! is_archive() ) {
+				$result = false;
+			}
+		}
+
+		if ( isset( $atts[ 'attachment' ] ) ) {
+			if ( ! is_attachment() ) {
+				$result = false;
+			}
+		}
+
+		if ( isset( $atts[ 'front_page' ] ) ) {
+			if ( ! is_front_page() ) {
+				$result = false;
+			}
+		}
+
+		if ( isset( $atts[ 'home_page' ] ) ) {
+			if ( ! is_home() ) {
+				$result = false;
+			}
+		}
+
+		if ( isset( $atts[ 'single_page' ] ) ) {
+			if ( ! is_single() ) {
+				$result = false;
+			}
+		}
+
+		if ( isset( $atts[ 'singular_page' ] ) ) {
+			if ( ! is_singular() ) {
+				$result = false;
+			}
+		}
+
+		if ( isset( $atts[ 'sticky_page' ] ) ) {
+			if ( ! is_sticky() ) {
+				$result = false;
+			}
+		}
+	}
 }
 
 $wp_conditional_logic = new WP_ConditionalLogic();
