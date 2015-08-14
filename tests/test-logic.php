@@ -44,6 +44,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_user_id_correct_user() {
 		$atts = array( 'user_id' => get_current_user_id() );
@@ -54,6 +55,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_user_id_incorrect_user() {
 		$atts = array( 'user_id' => get_current_user_id() + 1 );
@@ -64,6 +66,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_capability_subscriber() {
 		$user = new WP_User( $this->factory->user->create( array( 'role' => 'subscriber' ) ) );
@@ -80,6 +83,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_capability_contributor() {
 		$user = new WP_User( $this->factory->user->create( array( 'role' => 'contributor' ) ) );
@@ -96,6 +100,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_capability_author() {
 		$user = new WP_User( $this->factory->user->create( array( 'role' => 'author' ) ) );
@@ -112,6 +117,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_capability_editor() {
 		$user = new WP_User( $this->factory->user->create( array( 'role' => 'editor' ) ) );
@@ -128,6 +134,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_capability_administrator() {
 		$user = new WP_User( $this->factory->user->create( array( 'role' => 'administrator' ) ) );
@@ -144,6 +151,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_meta_key_does_not_exist() {
 		$user = new WP_User( $this->factory->user->create() );
@@ -161,6 +169,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_meta_key_does_exist() {
 		$user = new WP_User( $this->factory->user->create() );
@@ -181,6 +190,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_meta_key_does_exist_bad_value() {
 		$user = new WP_User( $this->factory->user->create() );
@@ -204,6 +214,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_meta_key_does_exist_correct_value() {
 		$user = new WP_User( $this->factory->user->create() );
@@ -227,6 +238,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_user_logged_in_false() {
 		$atts = array(
@@ -239,6 +251,7 @@ class TestConditionalLogic extends WP_UnitTestCase {
 
 	/**
 	 * @covers WP_ConditionalLogic::shortcode_is
+	 * @covers WP_ConditionalLogic::is_user
 	 */
 	public function test_is_user_logged_in_true() {
 		$user = new WP_User( $this->factory->user->create() );

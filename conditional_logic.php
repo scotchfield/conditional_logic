@@ -28,6 +28,16 @@ class WP_ConditionalLogic {
 	public function shortcode_is( $atts, $content ) {
 		$result = true;
 
+		$this->is_user( $atts, $result );
+
+		if ( ! $result ) {
+			$content = '';
+		}
+
+		return do_shortcode( $content );
+	}
+
+	public function is_user( $atts, &$result ) {
 		if ( isset( $atts[ 'user_id' ] ) ) {
 			if ( get_current_user_id() != intval( $atts[ 'user_id' ] ) ) {
 				$result = false;
@@ -58,12 +68,6 @@ class WP_ConditionalLogic {
 				$result = false;
 			}
 		}
-
-		if ( ! $result ) {
-			$content = '';
-		}
-
-		return do_shortcode( $content );
 	}
 
 }
